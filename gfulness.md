@@ -37,6 +37,7 @@
 #### Composition
 
 Backend API is composed of `AWS API Gateway`, `Amazon Cognito`, and `AWS Lambda Functions`
+
 ![Diagram](6.png)
 
 #### Amazon Cognito [(link)](https://aws.amazon.com/cognito/)
