@@ -138,4 +138,4 @@ Both AWS and iOS efforts are estimated at roughly the same time and effort
 * 10 hours a week. 4 weeks. $100/hour - $4000
 
 #### Total
-20 hours. $8000
+80 hours. $8000
