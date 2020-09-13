@@ -2,7 +2,7 @@
 
 ## High Level Requirements
 
-#### User Log In/Registration
+### User Log In/Registration
 ```mermaid
 sequenceDiagram
     participant iOS App
@@ -17,7 +17,7 @@ sequenceDiagram
     Backend API-->>iOS App: User Profile
 ```
 
-#### User Download Flow (assumes logged in)
+### User Download Flow (assumes logged in)
 ```mermaid
 sequenceDiagram
     participant iOS App
@@ -42,7 +42,7 @@ sequenceDiagram
     end
 ```
 
-#### User Search Flow (assumes logged in)
+### User Search Flow (assumes logged in)
 ```mermaid
 sequenceDiagram
     participant iOS App
@@ -58,7 +58,7 @@ sequenceDiagram
     Note right of iOS App: Continued in "User Download Flow"
 ```
 
-#### Mark as favorite (assumes logged in)
+### Mark as favorite (assumes logged in)
 ```mermaid
 sequenceDiagram
     participant iOS App
@@ -73,7 +73,7 @@ sequenceDiagram
     Backend API-->>iOS App: Return new list of favorites
 ```
 
-#### Admin Upload Flow
+### Admin Upload Flow
 ```mermaid
 sequenceDiagram
     participant iOS App
@@ -118,7 +118,7 @@ sequenceDiagram
     Amazon Cognito -->> iOS App: Return authorization token
     iOS App ->> AWS API Gateway: Resolve URL (include authorization token)
     Note right of AWS API Gateway: Assumes valid authorization token from cognito
-    AWS API Gateway-->>AWS API Gateway: Decide which function to use <br /> based on URL
+    AWS API Gateway-->>AWS API Gateway: Decide which function to use based on URL
     AWS API Gateway->>AWS Lambda Functions: Execute Function
     AWS Lambda Functions-->>AWS Lambda Functions: Initiatilize function
     AWS Lambda Functions-->>Other AWS Services: Execute
