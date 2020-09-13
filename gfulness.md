@@ -3,90 +3,20 @@
 ## High Level Requirements
 
 ### User Log In/Registration
-```mermaid
-sequenceDiagram
-    participant iOS App
-    participant Backend API
-    participant Database
-    iOS App->>Backend API: Register / Log in
-    Backend API->>Backend API: Resolve authentication <br />with provider (Google, Apple, Facebook, etc)
-    Backend API-->>iOS App: Authentication Token
-    iOS App->>Backend API: Get User Profile
-    Backend API->>Database: Get User Profile
-    Database-->>Backend API: User Profile
-    Backend API-->>iOS App: User Profile
-```
+![Diagram](1.png)
 
 ### User Download Flow (assumes logged in)
-```mermaid
-sequenceDiagram
-    participant iOS App
-    participant Backend API
-    participant Database
-    participant File Storage
-    iOS App->>Backend API: Listen to "audio 1"
-    Backend API->>Backend API: Check status of subscription
-    Note right of Backend API: Assumes subscribed
-    Backend API->>Database: update "recently viewed" stat
-    Backend API->>Database: get storage location for audio 1
-    Database-->>Backend API: audio 1 file URL
-    Backend API-->>iOS App: audio 1 file URL
-    
-    iOS App->>File Storage: Download "audio 1"
-    File Storage-->>iOS App: audio 1 mp3
+![Diagram](2.png)
 
-    loop Listening
-        iOS App->>iOS App: Listening to Audio
-        iOS App->>Backend API: Listening event(s)
-        Backend API->>Backend API: Update statistics <br/> (Streaks, time spent)
-    end
-```
 
 ### User Search Flow (assumes logged in)
-```mermaid
-sequenceDiagram
-    participant iOS App
-    participant Backend API
-    iOS App->>Backend API: Search for "audio 1"
-    loop Permissions Check
-        Backend API->>Backend API: Check status of subscription
-    end
-    Note right of Backend API: Assumes subscribed
-    Backend API->>Search Index: Find "audio 1"
-    Search Index-->>Backend API: Return results (found)
-    Backend API-->>iOS App: Return results (found)
-    Note right of iOS App: Continued in "User Download Flow"
-```
+![Diagram](3.png)
 
 ### Mark as favorite (assumes logged in)
-```mermaid
-sequenceDiagram
-    participant iOS App
-    participant Backend API
-    iOS App->>Backend API: Mark "audio 1" as favorite
-    loop Permissions Check
-        Backend API->>Backend API: Check status of subscription
-    end
-    Note right of Backend API: Assumes subscribed
-    Backend API->>Database: Mark "audio 1" as favorite
-    Note right of Database: May be applied to user profile
-    Backend API-->>iOS App: Return new list of favorites
-```
+![Diagram](4.png)
 
 ### Admin Upload Flow
-```mermaid
-sequenceDiagram
-    participant iOS App
-    participant Backend API
-    iOS App->>Backend API: Upload new file
-    loop Permissions Check
-        Backend API->>Backend API: Check admin permissions on user
-    end
-    Note right of Backend API: Assumes admin
-    Backend API->>Database: Store info
-    Backend API->>File Storage: Store file
-```
-
+![Diagram](5.png)
 
 ## Detailed Requirements
 
@@ -107,24 +37,7 @@ sequenceDiagram
 #### Composition
 
 Backend API is composed of `AWS API Gateway`, `Amazon Cognito`, and `AWS Lambda Functions`
-```mermaid
-sequenceDiagram
-    participant iOS App
-    participant Amazon Cognito
-    participant AWS API Gateway
-    participant AWS Lambda Functions
-    participant Other AWS Services
-    iOS App ->> Amazon Cognito: Log in
-    Amazon Cognito -->> iOS App: Return authorization token
-    iOS App ->> AWS API Gateway: Resolve URL (include authorization token)
-    Note right of AWS API Gateway: Assumes valid authorization token from cognito
-    AWS API Gateway-->>AWS API Gateway: Decide which function to use based on URL
-    AWS API Gateway->>AWS Lambda Functions: Execute Function
-    AWS Lambda Functions-->>AWS Lambda Functions: Initiatilize function
-    AWS Lambda Functions-->>Other AWS Services: Execute
-    AWS Lambda Functions-->>AWS Lambda Functions: Tear down
-    Note right of AWS Lambda Functions: AWS only bills for running functions. No idle charges. <br /> Once torn down, billing stops.
-```
+![Diagram](6.png)
 
 #### Amazon Cognito [(link)](https://aws.amazon.com/cognito/)
 * AWS managed user pool and permission management
@@ -222,3 +135,6 @@ Both AWS and iOS efforts are estimated at roughly the same time and effort
 
 #### Milestone 2 - iOS App
 * 10 hours a week. 4 weeks. $100/hour - $4000
+
+#### Total
+20 hours. $8000
